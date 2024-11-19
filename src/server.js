@@ -1,23 +1,19 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
-require('dotenv').config()
-
+const configviewEngiine = require('./config/viewEngine')
+const webRouter = require('./routes/web')
 
 const app = express()
 const port = process.env.PORT || 8888
 
 //template engine 
-app.set('views', './src/views')
-app.set('view engine', 'els')
+configviewEngiine(app)
 
-//config status file 
-app.use(express.static(path.join(__dirname, 'public')));
+//Khai bao router
+app.use('/',webRouter)
 
 
-app.get('/', (req, res) => {
-  // res.send('Hello World!')
-  res.render('hi.ejs')
-})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
