@@ -18,14 +18,10 @@ configviewEngiine(app)
 //Khai bao router
 app.use('/',webRouter)
 
-// // A simple SELECT query
-// connection.query(
-//   'SELECT * FROM Users',
-//   function (err, results, fields) {
-//     console.log(results); // results contains rows returned by server
-//   }
-// );
 
+
+//kết nối 
+connection()
 
 
 app.listen(port, () => {
