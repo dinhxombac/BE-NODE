@@ -1,14 +1,75 @@
 const express = require('express')
+const connection = require('../config/database')
+const {getAllUsers,getUserById,updateUserById,deleteUserbyId} = require('../services/CRUDService')
 
-const getHomepage = (req, res) =>{
-        res.render('hi.ejs')
+const getHomepage = async (req, res) =>{
+    const results = await getAllUsers()
+    return res.render('home.ejs',{listUsers: results})
 }
 
 
 const getABC = (req, res) =>{
     res.send('Hello World! ABC')
 }
+
+const create = (req, res) =>{
+    return res.render('create.ejs')
+}
+
+const createUser = async (req, res) =>{
+    const {email,name,city} = req.body 
+    
+    
+        
+    // Kiểm tra dữ liệu gửi lên
+    console.log('Received data:', results);
+    res.send('them thanh cong ')
+    
+
+}
+
+const getEditUser = async (req,res) =>{
+    const userId = req.params.id
+    let user = await getUserById(userId)
+    return res.render('edit.ejs',{user:user})
+}
+
+const updateUser = async (req, res) =>{
+    const {email,name,city,userId} = req.body 
+    
+    await updateUserById(email,name,city,userId)
+    
+    res.redirect('/')
+    
+
+}
+
+const deleteUser = async (req, res) =>{
+    const userId = req.params.id
+    let user = await getUserById(userId)
+    
+    res.render('delete.ejs',{userEdit:user})
+    
+} 
+const removeUser = async (req,res) =>{
+    const id = req.body.userId
+
+    await deleteUserbyId(id)
+
+    res.redirect('/')
+
+}
+
+
 module.exports = {
     getHomepage,
-    getABC
+    getABC,
+    createUser,
+    create,
+    getEditUser,
+    updateUser,
+    deleteUser,
+    removeUser
+
+    
 }
